@@ -1,5 +1,3 @@
---- You are not supposed to be here if you are looking for script Copy all this
-
 local ScreenGui = Instance.new("ScreenGui")
 local Frame = Instance.new("Frame")
 local TextLabel = Instance.new("TextLabel")
