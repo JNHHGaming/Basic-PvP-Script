@@ -285,7 +285,7 @@ bighitboxButton.Text = "Big Hitbox"
 bighitboxButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 bighitboxButton.TextSize = 12.000
 bighitboxButton.MouseButton1Down:connect(function()
-loadstring(game:HttpGet("https://freenote.biz/raw/7ppgluanqp",true))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/JNHHGaming/big/refs/heads/main/big",true))()
 end)
 
 InfJumpButton.Name = "InfJumpButton"
