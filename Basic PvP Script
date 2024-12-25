@@ -14,6 +14,8 @@ local hitboxButton = Instance.new("TextButton")
 local SpeedButton = Instance.new("TextButton")
 local bighitboxButton = Instance.new("TextButton")
 local InfJumpButton = Instance.new("TextButton")
+local NoClipButton = Instance.new("TextButton")
+local InvisibleButton = Instance.new("TextButton")
 local IyButton = Instance.new("TextButton")
 local EspButton = Instance.new("TextButton")
 local PingButton = Instance.new("TextButton")
@@ -99,7 +101,7 @@ TextLabel.BorderSizePixel = 0
 TextLabel.Position = UDim2.new(0.207499996, 0, 0, 0)
 TextLabel.Size = UDim2.new(0, 234, 0, 58)
 TextLabel.Font = Enum.Font.LuckiestGuy
-TextLabel.Text = "Basic PvP Script"
+TextLabel.Text = "Basic PvP Script V2"
 TextLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
 TextLabel.TextSize = 24.000
 TextLabel.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
@@ -274,7 +276,7 @@ end
 end)
 
 
-bighitboxButton.Name = "bighitboxButton"
+hitboxButton.Name = "bighitboxButton"
 bighitboxButton.Parent = HomeFrame
 bighitboxButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
 bighitboxButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -307,6 +309,59 @@ game:GetService("UserInputService").JumpRequest:connect(function()
 		game:GetService"Players".LocalPlayer.Character:FindFirstChildOfClass'Humanoid':ChangeState("Jumping")
 	end
 end)
+end)
+
+NoClipButton.Name = "NoClipButton"
+NoClipButton.Parent = HomeFrame
+NoClipButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+NoClipButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+NoClipButton.BorderSizePixel = 0
+NoClipButton.Position = UDim2.new(0.514999986, 0, 0.295, 0)
+NoClipButton.Size = UDim2.new(0, 52, 0, 38)
+NoClipButton.Font = Enum.Font.Highway
+NoClipButton.Text = "No Clip"
+NoClipButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+NoClipButton.TextSize = 15.000
+NoClipButton.MouseButton1Down:connect(function()
+local Noclip = nil
+local Clip = nil
+
+function noclip()
+	Clip = false
+	local function Nocl()
+		if Clip == false and game.Players.LocalPlayer.Character ~= nil then
+			for _,v in pairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+				if v:IsA('BasePart') and v.CanCollide and v.Name ~= floatName then
+					v.CanCollide = false
+				end
+			end
+		end
+		wait(0.21) -- basic optimization
+	end
+	Noclip = game:GetService('RunService').Stepped:Connect(Nocl)
+end
+
+function clip()
+	if Noclip then Noclip:Disconnect() end
+	Clip = true
+end
+
+noclip() -- to toggle noclip() and clip()
+end)
+
+InvisibleButton.Name = "InvisibleButton"
+InvisibleButton.Parent = HomeFrame
+InvisibleButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+InvisibleButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+InvisibleButton.BorderSizePixel = 0
+InvisibleButton.Position = UDim2.new(0.685, 0, 0.296, 0)
+InvisibleButton.Size = UDim2.new(0, 52, 0, 38)
+InvisibleButton.Font = Enum.Font.Highway
+InvisibleButton.Text = "Invisibility"
+InvisibleButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+InvisibleButton.TextSize = 12.000
+InvisibleButton.MouseButton1Down:connect(function()
+loadstring(game:HttpGet("https://pastebin.com/raw/wsTjhgAH"))()
 end)
 
 IyButton.Name = "IyButton"
@@ -477,7 +532,7 @@ ImageButton.Draggable = true
 
 
 game.StarterGui:SetCore("SendNotification",  {
- Title = "Basic PvP Script";
+ Title = "Basic PvP Script V2";
  Text = "Made by JN HH Gaming. Subscribe him on youtube";
  Icon = "rbxassetid://15596526922";
  Duration = 30;
