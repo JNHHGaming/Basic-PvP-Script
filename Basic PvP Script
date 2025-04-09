@@ -101,7 +101,7 @@ TextLabel.BorderSizePixel = 0
 TextLabel.Position = UDim2.new(0.207499996, 0, 0, 0)
 TextLabel.Size = UDim2.new(0, 234, 0, 58)
 TextLabel.Font = Enum.Font.LuckiestGuy
-TextLabel.Text = "Basic PvP Script V2"
+TextLabel.Text = "Basic PvP Script V3"
 TextLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
 TextLabel.TextSize = 24.000
 TextLabel.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
@@ -204,7 +204,7 @@ FlyButton.Text = "Fly"
 FlyButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 FlyButton.TextSize = 24.000
 FlyButton.MouseButton1Down:connect(function()
-loadstring(game:HttpGet('https://pastebin.com/raw/YSL3xKYU'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/JNHHGaming/Fly/refs/heads/main/Fly'))()
 end)
 
 hitboxButton.Name = "hitboxButton"
@@ -248,7 +248,7 @@ SpeedButton.BorderSizePixel = 0
 SpeedButton.Position = UDim2.new(0.684000015, 0, 0, 0)
 SpeedButton.Size = UDim2.new(0, 52, 0, 38)
 SpeedButton.Font = Enum.Font.Highway
-SpeedButton.Text = "Speed"
+SpeedButton.Text = "Tpwalk"
 SpeedButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 SpeedButton.TextSize = 16.000
 SpeedButton.MouseButton1Down:connect(function()
@@ -357,11 +357,15 @@ InvisibleButton.BorderSizePixel = 0
 InvisibleButton.Position = UDim2.new(0.685, 0, 0.296, 0)
 InvisibleButton.Size = UDim2.new(0, 52, 0, 38)
 InvisibleButton.Font = Enum.Font.Highway
-InvisibleButton.Text = "Invisibility"
+InvisibleButton.Text = "Speed"
 InvisibleButton.TextColor3 = Color3.fromRGB(0, 0, 0)
-InvisibleButton.TextSize = 12.000
+InvisibleButton.TextSize = 16.000
 InvisibleButton.MouseButton1Down:connect(function()
-loadstring(game:HttpGet("https://pastebin.com/raw/wsTjhgAH"))()
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+humanoid.WalkSpeed = 60
 end)
 
 IyButton.Name = "IyButton"
@@ -532,7 +536,7 @@ ImageButton.Draggable = true
 
 
 game.StarterGui:SetCore("SendNotification",  {
- Title = "Basic PvP Script V2";
+ Title = "Basic PvP Script V3";
  Text = "Made by JN HH Gaming. Subscribe him on youtube";
  Icon = "rbxassetid://15596526922";
  Duration = 30;
