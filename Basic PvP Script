@@ -9,6 +9,11 @@ local Youtube = Instance.new("TextLabel")
 local CreditsButton = Instance.new("ImageButton")
 local HomeButton = Instance.new("ImageButton")
 local HomeFrame = Instance.new("Frame")
+local ColorButton = Instance.new("TextButton")
+local FullBrightnessButton = Instance.new("TextButton")
+local NofogButton = Instance.new("TextButton")
+local AimbotButton = Instance.new("TextButton")
+local NoLagButton = Instance.new("TextButton")
 local FlyButton = Instance.new("TextButton")
 local hitboxButton = Instance.new("TextButton")
 local SpeedButton = Instance.new("TextButton")
@@ -101,7 +106,7 @@ TextLabel.BorderSizePixel = 0
 TextLabel.Position = UDim2.new(0.207499996, 0, 0, 0)
 TextLabel.Size = UDim2.new(0, 234, 0, 58)
 TextLabel.Font = Enum.Font.LuckiestGuy
-TextLabel.Text = "Basic PvP Script V3"
+TextLabel.Text = "Basic PvP Script V4"
 TextLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
 TextLabel.TextSize = 24.000
 TextLabel.TextStrokeColor3 = Color3.fromRGB(255, 255, 255)
@@ -239,6 +244,54 @@ end
 end)
 end)
 
+-- 🎨 Color Theme Button (Final Version)
+ColorButton.Name = "ColorButton"
+ColorButton.Parent = HomeFrame
+ColorButton.Position = UDim2.new(0, -38, 0.59, 0) -- below ℹ️ button
+ColorButton.Size = UDim2.new(0, 38, 0, 38)
+ColorButton.Font = Enum.Font.Highway
+ColorButton.Text = "Colour"
+ColorButton.TextColor3 = Color3.fromRGB(255, 0, 0)
+ColorButton.TextSize = 16.000
+ColorButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ColorButton.BorderSizePixel = 0
+ColorButton.BorderColor3 = Color3.fromRGB(255, 255, 255)
+ColorButton.ZIndex = 2
+
+ColorButton.MouseButton1Click:Connect(function()
+	local colors = {
+		Color3.fromRGB(255, 0, 0),     -- red
+		Color3.fromRGB(0, 0, 255),     -- blue
+		Color3.fromRGB(255, 255, 0),   -- yellow
+		Color3.fromRGB(255, 255, 255), -- white
+		Color3.fromRGB(0, 255, 0),     -- green
+		Color3.fromRGB(255, 165, 0),   -- orange
+		Color3.fromRGB(128, 0, 128),   -- purple
+	}
+
+	local selected = colors[math.random(1, #colors)]
+
+	Frame.BorderColor3 = selected
+	HomeFrame.BorderColor3 = selected
+	CreditsFrame.BorderColor3 = selected
+
+	for _, v in pairs(HomeFrame:GetChildren()) do
+		if (v:IsA("TextButton") or v:IsA("ImageButton")) and v ~= ColorButton then
+			v.BackgroundColor3 = selected
+			if v:IsA("TextButton") then
+				v.TextColor3 = Color3.fromRGB(0, 0, 0)
+			end
+		end
+	end
+
+	for _, v in pairs(CreditsFrame:GetChildren()) do
+		if v:IsA("TextLabel") then
+			v.TextColor3 = selected
+		end
+	end
+
+	TextLabel.TextColor3 = selected
+end)
 
 SpeedButton.Name = "SpeedButton"
 SpeedButton.Parent = HomeFrame
@@ -454,6 +507,149 @@ ImageButton.Selectable = true
 ImageButton.Draggable = true
 
 
+-- Full Brightness Button
+FullBrightnessButton.Name = "FullBrightnessButton"
+FullBrightnessButton.Parent = HomeFrame
+FullBrightnessButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+FullBrightnessButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+FullBrightnessButton.BorderSizePixel = 0
+FullBrightnessButton.Position = UDim2.new(0.1685, 0, 0.59, 0)
+FullBrightnessButton.Size = UDim2.new(0, 52, 0, 38)
+FullBrightnessButton.Font = Enum.Font.Highway
+FullBrightnessButton.Text = "Brightness"
+FullBrightnessButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+FullBrightnessButton.TextSize = 12.000
+FullBrightnessButton.MouseButton1Down:Connect(function()
+    if not _G.FullBrightRunning then
+        _G.FullBrightRunning = true
+
+        local Lighting = game:GetService("Lighting")
+
+        local function removeEffects()
+            for _, v in pairs(Lighting:GetChildren()) do
+                if v:IsA("ColorCorrectionEffect") or v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("Atmosphere") then
+                    v:Destroy()
+                end
+            end
+        end
+
+        local function applySettings()
+            Lighting.Brightness = 2
+            Lighting.ClockTime = 14
+            Lighting.FogEnd = 100000
+            Lighting.GlobalShadows = false
+            Lighting.OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+            removeEffects()
+        end
+
+        applySettings()
+
+        task.spawn(function()
+            while _G.FullBrightRunning do
+                applySettings()
+                task.wait(1)
+            end
+        end)
+    end
+end)
+
+-- No Fog Button
+NofogButton.Name = "NofogButton"
+NofogButton.Parent = HomeFrame
+NofogButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+NofogButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+NofogButton.BorderSizePixel = 0
+NofogButton.Position = UDim2.new(0.342, 0, 0.59, 0)
+NofogButton.Size = UDim2.new(0, 52, 0, 38)
+NofogButton.Font = Enum.Font.Highway
+NofogButton.Text = "No Fog"
+NofogButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+NofogButton.TextSize = 16.000
+NofogButton.MouseButton1Down:Connect(function()
+    if not _G.NoFog then
+        _G.NoFog = true
+        local Lighting = game:GetService("Lighting")
+
+        task.spawn(function()
+            while _G.NoFog do
+                Lighting.FogEnd = 100000
+                for _, v in pairs(Lighting:GetDescendants()) do
+                    if v:IsA("Atmosphere") then
+                        v:Destroy()
+                    end
+                end
+                task.wait(1)
+            end
+        end)
+    end
+end)
+
+
+AimbotButton.Name = "AimbotButton"
+AimbotButton.Parent = HomeFrame
+AimbotButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+AimbotButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+AimbotButton.BorderSizePixel = 0
+AimbotButton.Position = UDim2.new(0, 0, 0.59, 0)
+AimbotButton.Size = UDim2.new(0, 52, 0, 38)
+AimbotButton.Font = Enum.Font.Highway
+AimbotButton.Text = "Aimbot"
+AimbotButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+AimbotButton.TextSize = 16.000
+AimbotButton.MouseButton1Down:Connect(function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/JNHHGaming/Aimbot/refs/heads/main/Aimbot",true))()
+end)
+
+NoLagButton.Name = "NoLagButton"
+NoLagButton.Parent = HomeFrame
+NoLagButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+NoLagButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+NoLagButton.BorderSizePixel = 0
+NoLagButton.Position = UDim2.new(0.85, 0, 0.296, 0)
+NoLagButton.Size = UDim2.new(0, 52, 0, 38)
+NoLagButton.Font = Enum.Font.Highway
+NoLagButton.Text = "Reduce Lag"
+NoLagButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+NoLagButton.TextSize = 11.000
+NoLagButton.MouseButton1Down:Connect(function()
+    -- 🔅 Disable global shadows
+    game:GetService("Lighting").GlobalShadows = false
+
+    -- 🎨 Remove post-processing effects & atmosphere
+    for _, v in pairs(game:GetService("Lighting"):GetChildren()) do
+        if v:IsA("BlurEffect") or v:IsA("SunRaysEffect") or v:IsA("ColorCorrectionEffect") or
+           v:IsA("BloomEffect") or v:IsA("DepthOfFieldEffect") or v:IsA("Atmosphere") then
+            v:Destroy()
+        end
+    end
+
+    -- 🌊 Simplify terrain water
+    local terrain = workspace:FindFirstChildOfClass("Terrain")
+    if terrain then
+        terrain.WaterWaveSize = 0
+        terrain.WaterTransparency = 1
+        terrain.WaterReflectance = 0
+    end
+
+    -- 🧼 Remove visual clutter in workspace
+    for _, v in pairs(workspace:GetDescendants()) do
+        if v:IsA("ParticleEmitter") or v:IsA("Trail") then
+            v.Enabled = false
+        elseif v:IsA("Smoke") or v:IsA("Texture") or v:IsA("Decal") or v:IsA("SurfaceAppearance") then
+            v:Destroy()
+        elseif v:IsA("Fire") or v:IsA("Sparkles") or v:IsA("PointLight") or v:IsA("SpotLight") or v:IsA("SurfaceLight") then
+            v:Destroy()
+        end
+    end
+
+    -- ✅ Notify player
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "JN HH Gaming Note";
+        Text = "Lag reduced successfully ✅";
+        Duration = 6;
+    })
+end)
+
 -- Scripts:
 
 
@@ -488,7 +684,7 @@ ImageButton.Draggable = true
 
 
 game.StarterGui:SetCore("SendNotification",  {
- Title = "Basic PvP Script V3";
+ Title = "Basic PvP Script V4";
  Text = "Made by JN HH Gaming. Subscribe him on youtube";
  Icon = "rbxassetid://15596526922";
  Duration = 30;
